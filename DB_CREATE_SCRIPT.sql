@@ -73,6 +73,11 @@ SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 
+INSERT INTO users (nick, login, password) VALUES ('nick1','login1','password1');
+INSERT INTO users (nick, login, password) VALUES ('nick2','login2','password2');
+INSERT INTO  insurance_offers (insurer, price, vehicles_id) VALUES ('insurer1',25.05,1);
+INSERT INTO vehicles (brand, model, users_id) VALUES ('brand1','model1',1);
+
 
 
 

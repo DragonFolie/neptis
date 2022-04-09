@@ -233,17 +233,17 @@ public class RepositoryMain {
             while (resultSet.next()) {
 
                 StringBuilder sb = new StringBuilder();
-                sb.append(" Id: ");
+                sb.append("\n Id: ");
                 sb.append(resultSet.getString(1));
-                sb.append(" Brand: ");
+                sb.append("; Brand: ");
                 sb.append(resultSet.getString(2));
-                sb.append(" Model: ");
+                sb.append("; Model: ");
                 sb.append(resultSet.getString(3));
-                sb.append(" User id owner: ");
+                sb.append("; User id owner: ");
                 sb.append(resultSet.getString(4));
-                sb.append(" Insert time: ");
+                sb.append("; Insert time: ");
                 sb.append(resultSet.getString(5));
-                sb.append("  ");
+                sb.append(";  ");
                 list.add(sb);
 
             }
@@ -274,17 +274,17 @@ public class RepositoryMain {
             while (resultSet.next()) {
 
                 StringBuilder sb = new StringBuilder();
-                sb.append(" Id: ");
+                sb.append("; Id: ");
                 sb.append(resultSet.getString(1));
-                sb.append(" Insurer: ");
+                sb.append("; Insurer: ");
                 sb.append(resultSet.getString(2));
-                sb.append(" Price: ");
+                sb.append("; Price: ");
                 sb.append(resultSet.getString(3));
-                sb.append(" Insurance offer for car with index: ");
+                sb.append("; Insurance offer for car with index: ");
                 sb.append(resultSet.getString(4));
-                sb.append(" Insert time:");
+                sb.append("; Insert time:");
                 sb.append(resultSet.getString(5));
-                sb.append("   ");
+                sb.append(";   ");
                 list.add(sb);
 
             }
@@ -309,6 +309,187 @@ public class RepositoryMain {
 
 
         try (Connection conn = RepositoryMain.getConnection(repositoryMain.getFILANAME())) {
+
+
+            preparedStatement = conn.prepareStatement("Select * From vehicles WHERE users_id = ?; ");
+            preparedStatement.setInt(1, idUser);
+            preparedStatement.execute();
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+
+                StringBuilder sb = new StringBuilder();
+                sb.append(" Id: ");
+                sb.append(resultSet.getString(1));
+                listOfIdVehicles.add(resultSet.getInt(1));
+                sb.append(" Brand: ");
+                sb.append(resultSet.getString(2));
+                sb.append(" Model: ");
+                sb.append(resultSet.getString(3));
+                sb.append(" User id owner: ");
+                sb.append(resultSet.getString(4));
+                sb.append(" Insert time: ");
+                sb.append(resultSet.getString(5));
+                sb.append("  ;  Vehicle: ");
+                list.add(sb);
+
+            }
+
+
+            for (int i = 0; i < listOfIdVehicles.size(); i++) {
+
+                preparedStatement2 = conn.prepareStatement("Select * From insurance_offers WHERE vehicles_id = ?; ");
+                preparedStatement2.setInt(1, listOfIdVehicles.get(i));
+                preparedStatement2.execute();
+
+                ResultSet resultSet2 = preparedStatement2.executeQuery();
+
+
+                while (resultSet2.next()) {
+
+                    StringBuilder sb2 = new StringBuilder();
+                    sb2.append("\n Id: ");
+                    sb2.append(resultSet2.getString(1));
+                    sb2.append(" Insurer: ");
+                    sb2.append(resultSet2.getString(2));
+                    sb2.append(" Price: ");
+                    sb2.append(resultSet2.getString(3));
+                    sb2.append(" Insurance offer for car with index: ");
+                    sb2.append(resultSet2.getString(4));
+                    sb2.append(" Insert time:");
+                    sb2.append(resultSet2.getString(5));
+                    sb2.append("   ");
+                    list.add(sb2);
+
+                }
+            }
+
+            String str = String.join("", list);
+            return str;
+
+        } catch (IOException | SQLException | ClassNotFoundException e) {
+            return null;
+        }
+
+
+    }
+
+
+    public String findAllVehiclesAndInsuranceOffersByIdNickUser(String nick) {
+
+        RepositoryMain repositoryMain = new RepositoryMain();
+        Statement statement = null;
+        ArrayList list = new ArrayList();
+        ArrayList<Integer> listOfIdVehicles = new ArrayList();
+        PreparedStatement preparedStatement = null;
+        PreparedStatement preparedStatement2 = null;
+        int idUser = 0;
+
+
+        try (Connection conn = RepositoryMain.getConnection(repositoryMain.getFILANAME())) {
+
+            preparedStatement = conn.prepareStatement("Select id From users WHERE nick = ?; ");
+            preparedStatement.setString(1, nick);
+            preparedStatement.execute();
+
+            ResultSet resultSet3 = preparedStatement.executeQuery();
+
+            while (resultSet3.next()) {
+
+                idUser = resultSet3.getInt(1);
+
+            }
+
+
+            preparedStatement = conn.prepareStatement("Select * From vehicles WHERE users_id = ?; ");
+            preparedStatement.setInt(1, idUser);
+            preparedStatement.execute();
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+
+                StringBuilder sb = new StringBuilder();
+                sb.append(" Id: ");
+                sb.append(resultSet.getString(1));
+                listOfIdVehicles.add(resultSet.getInt(1));
+                sb.append(" Brand: ");
+                sb.append(resultSet.getString(2));
+                sb.append(" Model: ");
+                sb.append(resultSet.getString(3));
+                sb.append(" User id owner: ");
+                sb.append(resultSet.getString(4));
+                sb.append(" Insert time: ");
+                sb.append(resultSet.getString(5));
+                sb.append("  ;  Vehicle: ");
+                list.add(sb);
+
+            }
+
+
+            for (int i = 0; i < listOfIdVehicles.size(); i++) {
+
+                preparedStatement2 = conn.prepareStatement("Select * From insurance_offers WHERE vehicles_id = ?; ");
+                preparedStatement2.setInt(1, listOfIdVehicles.get(i));
+                preparedStatement2.execute();
+
+                ResultSet resultSet2 = preparedStatement2.executeQuery();
+
+
+                while (resultSet2.next()) {
+
+                    StringBuilder sb2 = new StringBuilder();
+                    sb2.append("\n Id: ");
+                    sb2.append(resultSet2.getString(1));
+                    sb2.append(" Insurer: ");
+                    sb2.append(resultSet2.getString(2));
+                    sb2.append(" Price: ");
+                    sb2.append(resultSet2.getString(3));
+                    sb2.append(" Insurance offer for car with index: ");
+                    sb2.append(resultSet2.getString(4));
+                    sb2.append(" Insert time:");
+                    sb2.append(resultSet2.getString(5));
+                    sb2.append("   ");
+                    list.add(sb2);
+
+                }
+            }
+
+            String str = String.join("", list);
+            return str;
+
+        } catch (IOException | SQLException | ClassNotFoundException e) {
+            return null;
+        }
+
+
+    }
+
+    public String findAllVehiclesAndInsuranceOffersByIdLoginUser(String login) {
+
+        RepositoryMain repositoryMain = new RepositoryMain();
+        Statement statement = null;
+        ArrayList list = new ArrayList();
+        ArrayList<Integer> listOfIdVehicles = new ArrayList();
+        PreparedStatement preparedStatement = null;
+        PreparedStatement preparedStatement2 = null;
+        int idUser = 0;
+
+
+        try (Connection conn = RepositoryMain.getConnection(repositoryMain.getFILANAME())) {
+
+            preparedStatement = conn.prepareStatement("Select id From users WHERE login = ?; ");
+            preparedStatement.setString(1, login);
+            preparedStatement.execute();
+
+            ResultSet resultSet3 = preparedStatement.executeQuery();
+
+            while (resultSet3.next()) {
+
+                idUser = resultSet3.getInt(1);
+
+            }
 
 
             preparedStatement = conn.prepareStatement("Select * From vehicles WHERE users_id = ?; ");
@@ -376,14 +557,7 @@ public class RepositoryMain {
     }
 
 
-    public static void main(String[] args) {
-        RepositoryMain repositoryMain = new RepositoryMain();
 
-//        System.out.println(repositoryMain.findUserByLogin("login1"));
-//        System.out.println(repositoryMain.findAllVehicles(0));
-//        System.out.println(repositoryMain.findAllInsuranceOffers());
-//        System.out.println(repositoryMain.findAllVehiclesAndInsuranceOffersByIdVehicle(1));
-    }
 
 
 }

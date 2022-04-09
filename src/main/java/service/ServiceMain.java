@@ -34,4 +34,13 @@ public class ServiceMain {
     }
 
 
+    public String findAllVehiclesAndInsuranceOffersByIdLoginUser(String login){
+        return repositoryMain.findAllVehiclesAndInsuranceOffersByIdLoginUser(login);
+    }
+
+    public String findAllVehiclesAndInsuranceOffersByIdNickUser(String nick) {
+        return   repositoryMain.findAllVehiclesAndInsuranceOffersByIdNickUser( nick) ;
+    }
+
+
 }

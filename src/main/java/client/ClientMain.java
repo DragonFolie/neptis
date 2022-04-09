@@ -23,7 +23,7 @@ public class ClientMain {
         pr.println("ok");
         pr.flush();
         while (true) {
-            System.out.print("Hi, select option \n 1) Get information by id in User table  \n 2) Get information by variable in User Table \n 3) Exit" +
+            System.out.print("\n\n\nHi, select option \n 1) Get information by id in User table  \n 2) Get information by variable in User Table \n 3) Exit" +
                     "\n Input: ");
 
             int id;
@@ -47,7 +47,7 @@ public class ClientMain {
 
             if (numberOfOption.equals("2")) {
 
-                System.out.print("Write which variable you want to find by \n 1) nick \n 2) login ");
+                System.out.print("Write which variable you want to find user by \n 1) nick \n 2) login ");
                 System.out.println("\nInput:");
 
 
@@ -59,6 +59,7 @@ public class ClientMain {
                     String str = scannerTextOption2.nextLine();
 
                     System.out.println(serviceMain.findUserByNick(str).toString());
+                    System.out.println(serviceMain.findAllVehiclesAndInsuranceOffersByIdNickUser(str));
                     pr.println(serviceMain.findUserByNick(str));
                     pr.flush();
 
@@ -69,6 +70,7 @@ public class ClientMain {
                     String str = scannerTextOption2.nextLine();
 
                     System.out.println(serviceMain.findUserByLogin(str).toString());
+                    System.out.println(serviceMain.findAllVehiclesAndInsuranceOffersByIdLoginUser(str));
                     pr.println(serviceMain.findUserByLogin(str));
                     pr.flush();
 
